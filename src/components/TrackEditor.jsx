@@ -258,6 +258,26 @@ export default function TrackEditor({ recordedUrl, timelineDuration = 30 }) {
   const trackIdRef = useRef(1);
   const clipIdRef = useRef(1);
 
+  //Audio 저장
+  useEffect(() => {
+    const refs = {};
+    tracks.forEach(track => {
+      refs[track.id] = track.clips.map(clip => new Audio(clip.url));
+    });
+    audioRefs.current = refs;
+  }, [tracks]);
+
+  //트랙 전체 재생
+  const playTrack = (trackId) => {
+    const audios = audioRefs.current[trackId];
+    if (!audios) return;
+
+    audios.forEach(audio => {
+      audio.currentTime = 0; // 처음부터 재생
+      audio.play();
+    });
+  };
+
   // 트랙 추가
   const addTrack = () => {
     const id = trackIdRef.current++;
@@ -302,21 +322,30 @@ export default function TrackEditor({ recordedUrl, timelineDuration = 30 }) {
   };
 
   return (
-    <div className="p-4 space-y-4">
-      <button
+    <div className="p-[10px] space-y-[7px]">
+      <button  id="addTrackButton"
         onClick={addTrack}
-        className="px-3 py-1 bg-blue-600 text-white rounded shadow"
+        className="px-[30px] py-[10px] bg-blue-600 text-white rounded shadow"
       >
         Add Track
       </button>
 
       {tracks.map(track => (
-        <div key={track.id} className="border rounded p-3 space-y-2">
-          <div className="flex items-center space-x-2">
+        <div key={track.id} className="border border-[#3BA99C] rounded-[10px] p-[3px] space-y-[2px]">
+          <div className="flex items-center space-x-[2px]">
+
+            <button
+              id= "PlayButton"
+              onClick={() => playTrack(track.id)}
+              className="px-[20px] py-1 bg-purple-600 text-white rounded"
+            >
+              ▶ Play Track
+            </button>
+
             <button
               onClick={() => addRecordedClip(track.id)}
               disabled={!recordedUrl}
-              className="px-2 py-1 bg-green-500 text-white rounded"
+              className="px-[20px] py-1 bg-green-500 text-white rounded"
             >
               +
             </button>
@@ -329,7 +358,7 @@ export default function TrackEditor({ recordedUrl, timelineDuration = 30 }) {
             </button>
             <button
               onClick={() => toggleLoop(track.id)}
-              className={`px-2 py-1 rounded ${track.loop ? 'bg-green-600 text-white' : 'bg-gray-200'}`}
+              className={`px-2 py-1 rounded ${track.loop ? 'bg-[#b8f5f4] text-white' : 'bg-gray-200'}`}
             >
               {track.loop ? 'Loop On' : 'Loop Off'}
             </button>
@@ -344,7 +373,7 @@ export default function TrackEditor({ recordedUrl, timelineDuration = 30 }) {
             </div>
           </div>
 
-          <div className="relative h-12 border bg-gray-100">
+          <div className="relative h-[0px] border bg-[#3BA99C]">
             {track.clips.map(clip => (
               <div
                 key={clip.id}

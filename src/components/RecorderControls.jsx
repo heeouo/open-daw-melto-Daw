@@ -100,9 +100,9 @@ export default function RecorderControls({ onRecordComplete }) {
 
   return (
     <div className="flex space-x-4 items-center">
-      <button
+      <button 
         onClick={isRecording ? stopRecording : startRecording}
-        className="px-4 py-2 bg-red-500 text-white rounded"
+        className="px-[20px] py-[10px] bg-red-500 text-white rounded"
       >
         {isRecording ? 'Stop Recording' : 'Start Recording'}
       </button>
