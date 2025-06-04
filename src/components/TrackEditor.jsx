@@ -257,6 +257,7 @@ export default function TrackEditor({ recordedUrl, timelineDuration = 30 }) {
   const [tracks, setTracks] = useState([]);
   const trackIdRef = useRef(1);
   const clipIdRef = useRef(1);
+  const audioRefs = useRef({});
 
   //Audio 저장
   useEffect(() => {
