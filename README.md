@@ -26,7 +26,7 @@ Melto는 melting melody를 의미하며, 디지털 오디오 워크스테이션(
 ![오픈소스](./public/samples/readme_images/readme03.png)
 
 
-## 프로젝트 소개
+### 프로젝트 소개
 
 ![오픈소스](./public/samples/readme_images/readme04.png)
 
